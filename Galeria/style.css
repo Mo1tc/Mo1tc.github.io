@@ -1,0 +1,58 @@
+body {
+    font-family: 'Century', 'Serif';
+    text-align: center;
+}
+
+.header,.footer {
+    background-color: rgb(130, 0, 0);
+    color: white;
+    font-style: italic;
+    padding: 2px;
+    clear: both;
+    font-size: 150%;
+}
+
+.col-p ,.col-l{
+    width: 50%  ;
+    float: left;
+   
+
+}
+
+.col-p img ,.col-l img{
+   max-width: 80%;
+    max-height: 600px ;
+    object-fit: cover;
+    margin-top: 2%;
+    border: 5px solid rgb(130, 0, 0);
+    box-shadow:  10px 10px 7px rgba(0, 0, 0, 0.5);
+   
+
+}
+
+.kartka{
+    margin: 3%;
+}
+
+
+
+@media screen and (max-width: 1450px) {
+
+    .header,.footer {
+        font-size: 100%;
+    }
+
+    .col-p ,.col-l{
+        float: none;
+        text-align: center;
+        margin: auto;
+        margin-top: 1%;
+        width: 80%  ;
+    }  
+
+   
+
+
+
+
+}
