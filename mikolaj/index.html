@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikołaj</title>
+    <link rel ="stylesheet"  href="styl.css">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
+<body>
+<div class="opcje">
+
+
+<a id="label">Po kolei:</a>
+    <input type="radio" id="wybor" name="tryb" checked>
+
+<a id="label2">Losowo:</a>
+    <input type="radio" id="wyborlosowo" name="tryb">
+
+<div class="suwak">
+    <a  id="label3">Prędkość:</a>
+    <input type="range" id="speed" min="100" max="1000" value="1000" step="100"/>
+</div>
+
+</div>
+
+
+    <button id="start" onclick="start()">Kliknij przycisk aby rozpocząć grę!</button>
+    <button id="koniec" onclick="start()">Przegrałeś! Naciśnij aby zagrać ponownie</button>
+    <button id="wygrana" onclick="start()">Wygrałeś! Naciśnij aby zagrać ponownie</button>
+
+    <div id="liczby"></div>
+
+
+    <button id="mikolaj" onclick="sprawdz()">🎅</button>
+    <a id="wyniki"></a>
+
+
+
+
+
+
+<button id="buttonMuzyka" onclick="toggleMuzyka()">🔈</button>
+<input type="range" id="glosnosc" min="0" max="100" value="50" step="1"/>
+
+<audio id="muzyka" loop>
+    <source src="muzyka.m4a" type="audio/mp4">
+</audio>
+
+
+
+
+
+    <script src="skrypt.js"></script>
+</body>
+</html>
