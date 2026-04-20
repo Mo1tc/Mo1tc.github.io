@@ -1,84 +1,1096 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wszystkie Projekty</title>
-   <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-</head>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprawdzian z Biologii – Układ Ruchu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-
-    
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-weight: 500;
-        background-color: #f0f0f0;
-        text-align: center;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Nunito', sans-serif;
-    }
-    
-    h1 {
-        margin-bottom: 40px;
-        font-size: 40px;
-        font-weight: 600;
-    }
-
-    a {
-        display: block;
-        margin: 20px auto;
-        padding: 20px 25px;
-        width: 100%;
-        background: linear-gradient(160deg, #4a4949 0%, #141414 100%);
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 25px;
-        border: 2px solid #504c52;
-        border-radius: 12px;
-        transition: all 0.3s;
-    }
-
-    a:hover {
-        background: linear-gradient(160deg, #e5e4e4 0%, #898888 100%);
-        color: #000;
-    }
-
-     @media (max-width: 700px) {
-  a {
-    width: 80%;
+  :root {
+    --ink: #1a1a2e;
+    --paper: #f5f0e8;
+    --accent: #8b1a1a;
+    --accent2: #2c5f2e;
+    --ruled: #c8bfaa;
+    --gold: #b8860b;
+    --nav-bg: #12121f;
+    --shadow: rgba(26,26,46,0.18);
   }
-}
 
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: #2a2118;
+    min-height: 100vh;
+    color: var(--ink);
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(139,26,26,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(44,95,46,0.06) 0%, transparent 50%);
+  }
 
+  /* ══════════════════════════════════════════
+     NAV — 5 equal columns, never overflows
+  ══════════════════════════════════════════ */
+  nav {
+    background: var(--nav-bg);
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    width: 100%;
+    border-bottom: 2px solid var(--accent);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.55);
+  }
 
+  .nav-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
+  }
 
+  .nav-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 8px 4px 6px;
+    cursor: pointer;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: rgba(245,240,232,0.5);
+    transition: color .2s, background .2s, border-color .2s;
+    min-width: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-tab:hover  { color: var(--paper); background: rgba(255,255,255,0.05); }
+  .nav-tab.active { color: var(--gold);  border-bottom-color: var(--gold); background: rgba(184,134,11,0.1); }
+
+  .tab-icon  { font-size: clamp(1rem, 4vw, 1.35rem); line-height: 1; }
+  .tab-label {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(0.52rem, 2vw, 0.7rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    text-align: center;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+  }
+
+  /* ══════════════════════════════════════════
+     LAYOUT
+  ══════════════════════════════════════════ */
+  .content {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: clamp(1rem, 4vw, 2.5rem) clamp(0.6rem, 3vw, 1.5rem) 5rem;
+  }
+
+  .section { display: none; }
+  .section.visible { display: block; animation: fadeUp .3s ease; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(7px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ══════════════════════════════════════════
+     PAPER
+  ══════════════════════════════════════════ */
+  .paper {
+    background: var(--paper);
+    border-radius: 3px;
+    padding: clamp(1.1rem, 5vw, 3rem) clamp(1rem, 5vw, 3.5rem) clamp(1.1rem, 5vw, 3rem) clamp(1.2rem, 6vw, 4rem);
+    box-shadow: 0 4px 30px var(--shadow), 0 1px 0 rgba(255,255,255,0.25) inset;
+    position: relative;
+    overflow: hidden;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    background-image: repeating-linear-gradient(transparent, transparent 27px, var(--ruled) 27px, var(--ruled) 28px);
+    background-position: 0 56px;
+  }
+  .paper::before {
+    content: '';
+    position: absolute;
+    left: clamp(32px, 7vw, 68px);
+    top: 0; bottom: 0; width: 1px;
+    background: rgba(200,110,110,0.3);
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════════
+     HEADER
+  ══════════════════════════════════════════ */
+  .test-header {
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 2px solid var(--ink);
+  }
+  .test-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.95rem, 3.5vw, 1.4rem);
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+  }
+  .test-subtitle {
+    font-size: 0.82rem;
+    text-align: center;
+    color: rgba(26,26,46,0.65);
+    font-style: italic;
+    margin-bottom: 0.9rem;
+  }
+  .header-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-size: 0.83rem;
+  }
+  .field-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    flex: 1 1 160px;
+    min-width: 0;
+  }
+  .field-label { font-weight: 600; font-size: 0.79rem; white-space: nowrap; flex-shrink: 0; }
+  .field-blank  { flex: 1; min-width: 30px; }
+  .max-pts { font-size: 0.8rem; color: var(--accent); font-weight: 700; flex: 0 0 auto; align-self: flex-end; }
+
+  .scope-note {
+    font-size: 0.76rem;
+    font-style: italic;
+    color: rgba(26,26,46,0.58);
+    margin-bottom: 1.4rem;
+    padding: 0.45rem 0.85rem;
+    border-left: 3px solid var(--gold);
+    background: rgba(184,134,11,0.04);
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════════
+     ZADANIA
+  ══════════════════════════════════════════ */
+  .zadanie { margin-bottom: 2rem; }
+
+  .zadanie-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: var(--accent);
+    border-bottom: 1px solid rgba(139,26,26,0.28);
+    padding-bottom: 0.22rem;
+    margin-bottom: 0.65rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+  }
+  .zadanie-pts { font-size: 0.76rem; font-weight: 600; color: rgba(26,26,46,0.45); }
+
+  .zadanie-text {
+    font-size: clamp(0.8rem, 2.5vw, 0.91rem);
+    line-height: 1.75;
+    margin-bottom: 0.45rem;
+  }
+  .bold { font-weight: 700; }
+
+  .sub-task {
+    margin: 0.6rem 0 0.45rem 0.2rem;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    line-height: 1.65;
+  }
+  .sub-task-label { font-weight: 700; margin-right: 0.2rem; }
+
+  /* blanks */
+  .answer-blank {
+    display: inline-block;
+    border-bottom: 1px solid var(--ink);
+    min-width: clamp(60px, 25vw, 180px);
+    height: 1.35em;
+    vertical-align: bottom;
+    margin: 0 0.1rem;
+  }
+  .answer-line {
+    width: 100%;
+    border-bottom: 1px solid var(--ink);
+    margin: 0.5rem 0;
+    height: 1.6em;
+  }
+  .answer-lines { margin-top: 0.35rem; }
+
+  .blank-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.8rem;
+    margin-top: 0.45rem;
+    align-items: baseline;
+  }
+  .blank-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    flex: 1 1 110px;
+    min-width: 0;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  }
+  .blank-item > span { white-space: nowrap; font-weight: 600; flex-shrink: 0; }
+  .blank-item .answer-blank { flex: 1; min-width: 50px; }
+
+  /* options */
+  .options-list { list-style: none; margin: 0.45rem 0 0.35rem 0.2rem; }
+  .options-list li {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    line-height: 1.75;
+    display: flex;
+    gap: 0.35rem;
+    align-items: flex-start;
+  }
+  .opt-label { font-weight: 700; min-width: 1.3rem; flex-shrink: 0; }
+
+  .num-list {
+    margin: 0.35rem 0 0.3rem 1.3rem;
+    list-style: decimal;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    line-height: 2.1;
+  }
+
+  .choice-inline {
+    font-style: italic;
+    font-size: clamp(0.78rem, 2.5vw, 0.88rem);
+    color: rgba(26,26,46,0.72);
+  }
+
+  /* diagram row */
+  .diagram-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 0.7rem 0;
+  }
+  .diagram-placeholder {
+    background: rgba(26,26,46,0.05);
+    border: 1px dashed var(--ruled);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    flex: 1 1 70px;
+    font-size: 0.7rem;
+    color: rgba(26,26,46,0.38);
+    font-style: italic;
+    text-align: center;
+    padding: 0.45rem;
+    gap: 0.2rem;
+  }
+  .diagram-placeholder strong { font-size: 0.82rem; font-style: normal; color: rgba(26,26,46,0.52); }
+
+  /* vitamin rows */
+  .vitamin-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.7rem;
+    align-items: baseline;
+    margin: 0.4rem 0;
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  }
+  .vitamin-row .answer-blank { flex: 1; min-width: 50px; }
+
+  /* EPO layout */
+  .epo-layout {
+    display: grid;
+    grid-template-columns: 1fr 130px;
+    gap: 0.9rem;
+    align-items: start;
+    margin: 0.7rem 0;
+  }
+  .schema-box {
+    background: white;
+    border: 1px solid var(--ruled);
+    border-radius: 4px;
+    padding: 0.6rem;
+  }
+  .schema-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12rem;
+  }
+  .schema-node {
+    border: 1px solid var(--ink);
+    padding: 0.16rem 0.45rem;
+    font-weight: 600;
+    font-size: 0.68rem;
+    background: var(--paper);
+    min-width: 68px;
+    text-align: center;
+  }
+  .schema-arrow { font-size: 0.8rem; }
+  .schema-label { font-size: 0.62rem; font-weight: 600; text-align: center; line-height: 1.25; }
+  .schema-head  { display: flex; justify-content: space-between; margin-bottom: 0.35rem; font-size: 0.64rem; font-weight: 700; }
+
+  /* ══════════════════════════════════════════
+     ANSWER KEY
+  ══════════════════════════════════════════ */
+  .key-section .paper { background-image: none; border-left: 5px solid var(--accent2); }
+
+  .key-item {
+    margin-bottom: 1.3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(44,95,46,0.18);
+  }
+  .key-item:last-child { border-bottom: none; }
+
+  .key-zadanie {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.93rem;
+    font-weight: 700;
+    color: var(--accent2);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+  .key-pts {
+    background: var(--accent2);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.09rem 0.4rem;
+    border-radius: 2px;
+    font-family: 'Source Serif 4', serif;
+  }
+  .key-answer {
+    font-size: clamp(0.8rem, 2.5vw, 0.88rem);
+    line-height: 1.8;
+    background: rgba(44,95,46,0.06);
+    border-left: 3px solid var(--accent2);
+    padding: 0.55rem 0.85rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .key-answer strong { color: var(--accent2); }
+  .accepted {
+    font-size: 0.76rem;
+    color: rgba(26,26,46,0.55);
+    font-style: italic;
+    margin-top: 0.28rem;
+    line-height: 1.5;
+  }
+
+  /* ══════════════════════════════════════════
+     NOTATKI (tab 5)
+  ══════════════════════════════════════════ */
+  .notes-section .paper { background-image: none; }
+
+  .notes-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    font-weight: 900;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .notes-sub {
+    font-size: 0.8rem;
+    color: rgba(26,26,46,0.55);
+    font-style: italic;
+    margin-bottom: 1.6rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .note-block {
+    margin-bottom: 1.8rem;
+  }
+  .note-block-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.55rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid rgba(139,26,26,0.25);
+  }
+  .note-block-title .note-icon { margin-right: 0.35rem; }
+
+  .note-text {
+    font-size: clamp(0.8rem, 2.5vw, 0.88rem);
+    line-height: 1.85;
+    color: var(--ink);
+  }
+
+  .note-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: clamp(0.75rem, 2.2vw, 0.84rem);
+    margin-top: 0.4rem;
+  }
+  .note-table th {
+    background: rgba(26,26,46,0.07);
+    font-weight: 700;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--ruled);
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+  }
+  .note-table td {
+    padding: 0.32rem 0.6rem;
+    border: 1px solid var(--ruled);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .note-table tr:nth-child(even) td { background: rgba(26,26,46,0.025); }
+
+  .tag-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.45rem;
+  }
+  .tag {
+    background: rgba(139,26,26,0.09);
+    border: 1px solid rgba(139,26,26,0.2);
+    border-radius: 3px;
+    padding: 0.22rem 0.6rem;
+    font-size: clamp(0.72rem, 2vw, 0.8rem);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .tag.green {
+    background: rgba(44,95,46,0.09);
+    border-color: rgba(44,95,46,0.2);
+    color: var(--accent2);
+  }
+
+  .tip-box {
+    background: rgba(184,134,11,0.07);
+    border-left: 3px solid var(--gold);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 4px 4px 0;
+    font-size: clamp(0.78rem, 2.2vw, 0.85rem);
+    line-height: 1.7;
+    margin-top: 0.5rem;
+  }
+  .tip-box strong { color: var(--gold); }
+
+  u { text-decoration: underline; }
+
+  /* ══════════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════════ */
+  @media (max-width: 680px) {
+    .epo-layout { grid-template-columns: 1fr; }
+    .schema-box { max-width: 180px; margin: 0 auto; }
+  }
+
+  @media (max-width: 420px) {
+    .paper { padding: 0.9rem 0.75rem 0.9rem 1rem; }
+    .paper::before { left: 24px; }
+    .header-fields { flex-direction: column; }
+    .field-line { flex: 1 1 100%; }
+    .diagram-row { flex-direction: column; }
+    .blank-row { flex-direction: column; }
+    .blank-item { flex: 1 1 100%; }
+    .vitamin-row { flex-direction: column; }
+  }
 </style>
-
-
+</head>
 <body>
-    <div class="container">
-        <h1>Projekty - Mateusz Olczyk</h1>
-        <a href="https://mo1tc.github.io/galeria/">Galeria kartek świątecznych klasy 2tc</a>
-        <a href="https://mo1tc.github.io/ytvsdvd/">Gra YouTube VS DVD</a>
-        <a href="https://mo1tc.github.io/pkn/">Papier, kamień, nożyce</a>
-        <a href="https://mo1tc.github.io/mikolaj/">Mikołaj</a>
+
+<nav>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="show('gr1',0)">
+      <span class="tab-icon">📄</span>
+      <span class="tab-label">Grupa 1</span>
+    </button>
+    <button class="nav-tab" onclick="show('gr2',1)">
+      <span class="tab-icon">📄</span>
+      <span class="tab-label">Grupa 2</span>
+    </button>
+    <button class="nav-tab" onclick="show('key1',2)">
+      <span class="tab-icon">✅</span>
+      <span class="tab-label">Klucz 1</span>
+    </button>
+    <button class="nav-tab" onclick="show('key2',3)">
+      <span class="tab-icon">✅</span>
+      <span class="tab-label">Klucz 2</span>
+    </button>
+    <button class="nav-tab" onclick="show('notes',4)">
+      <span class="tab-icon">📚</span>
+      <span class="tab-label">Notatki</span>
+    </button>
+  </div>
+</nav>
+
+<div class="content">
+
+<div id="gr1" class="section visible">
+  <div class="paper">
+    <div class="test-header">
+      <div class="test-title">Sprawdzian testowy z biologii (zakres podstawowy)</div>
+      <div class="test-subtitle">Grupa 1</div>
+      <div class="header-fields">
+        <div class="field-line"><span class="field-label">Nazwisko i imię ucznia:</span><span class="field-blank"></span></div>
+        <div class="field-line"><span class="field-label">Klasa:</span><span class="field-blank"></span></div>
+        <div class="field-line"><span class="field-label">Data:</span><span class="field-blank"></span></div>
+        <div class="max-pts">…… / 20 pkt max</div>
+      </div>
+    </div>
+    <div class="scope-note">Zakres treści: Bierna i czynna część układu ruchu – budowa i funkcje. Choroby i higiena układu ruchu.</div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 1</span><span class="zadanie-pts">(1 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Wyjaśnij, na czym polega krwiotwórcza funkcja układu ruchu.</span></p>
+      <div class="answer-lines"><div class="answer-line"></div><div class="answer-line"></div></div>
     </div>
 
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 2</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Zaznacz dwa zdania, które poprawnie opisują wewnętrzną budowę kości.</span></p>
+      <ul class="options-list">
+        <li><span class="opt-label">A.</span> Okostna uczestniczy w przebudowie kości po urazach mechanicznych, np. po złamaniach.</li>
+        <li><span class="opt-label">B.</span> Tkanka kostna gąbczasta charakteryzuje się większą twardością w porównaniu z tkanką kostną zbitą.</li>
+        <li><span class="opt-label">C.</span> Tkanka kostna gąbczasta buduje głównie nasady kości długich.</li>
+        <li><span class="opt-label">D.</span> Blaszki kostne są charakterystycznym elementem budowy tkanki kostnej gąbczastej.</li>
+        <li><span class="opt-label">E.</span> U osób dorosłych większość kości wypełnia szpik kostny czerwony.</li>
+      </ul>
+    </div>
 
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 3</span><span class="zadanie-pts">(3 pkt)</span></div>
+      <p class="zadanie-text">Ilustracje przedstawiają trzy rodzaje połączeń kości.</p>
+      <div class="diagram-row">
+        <div class="diagram-placeholder"><strong>X</strong>połączenie ścisłe włókniste</div>
+        <div class="diagram-placeholder"><strong>Y</strong>połączenie ścisłe chrzęstne</div>
+        <div class="diagram-placeholder"><strong>Z</strong>połączenie ruchome</div>
+      </div>
+      <p class="zadanie-text">Przyporządkuj każdemu rodzajowi połączeń kości (X, Y, Z) dwa właściwe opisy (A–F).</p>
+      <ul class="options-list">
+        <li><span class="opt-label">A.</span> To połączenie występuje między trzonami kręgów.</li>
+        <li><span class="opt-label">B.</span> Jest to połączenie kości za pomocą tkanki włóknistej.</li>
+        <li><span class="opt-label">C.</span> Kości zespolone są tkanką kostną.</li>
+        <li><span class="opt-label">D.</span> Występują w kości krzyżowej.</li>
+        <li><span class="opt-label">E.</span> Występują w kościach czaszki.</li>
+        <li><span class="opt-label">F.</span> Kości zespolone są tkanką chrzęstną.</li>
+      </ul>
+      <div class="blank-row">
+        <div class="blank-item"><span>X:</span><span class="answer-blank"></span></div>
+        <div class="blank-item"><span>Y:</span><span class="answer-blank"></span></div>
+        <div class="blank-item"><span>Z:</span><span class="answer-blank"></span></div>
+      </div>
+    </div>
 
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 4</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text">Ilustracja przedstawia szkielet budowy kończyny górnej wraz z fragmentem obręczy barkowej.</p>
+      <div class="sub-task">
+        <span class="sub-task-label">a) (1p)</span> Podaj nazwy kości oznaczonych literami X, Y, Z.
+        <div class="blank-row">
+          <div class="blank-item"><span>X:</span><span class="answer-blank"></span></div>
+          <div class="blank-item"><span>Y:</span><span class="answer-blank"></span></div>
+          <div class="blank-item"><span>Z:</span><span class="answer-blank"></span></div>
+        </div>
+      </div>
+      <div class="sub-task">
+        <span class="sub-task-label">b) (1p)</span> Podaj nazwę stawu wskazanego strzałką i zaklasyfikuj go.
+        <div class="blank-row">
+          <div class="blank-item"><span>Nazwa stawu:</span><span class="answer-blank"></span></div>
+          <div class="blank-item"><span>Rodzaj stawu:</span><span class="answer-blank"></span></div>
+        </div>
+      </div>
+    </div>
 
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 5</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Uzupełnij poniższe zdanie.</span></p>
+      <p class="zadanie-text">Do skurczu mięśnia, poza białkami warunkującymi skurcz, niezbędne są: <span class="answer-blank"></span> oraz <span class="answer-blank"></span>.</p>
+    </div>
 
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 6</span><span class="zadanie-pts">(3 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Skreśl błędne informacje w zdaniach.</span></p>
+      <ul class="options-list" style="margin-left:0">
+        <li>A. Pomiędzy paliczkami kości palców występuje staw <u>zawiasowy</u> / siodełkowy.</li>
+        <li>B. Między pierwszym a drugim kręgiem kręgosłupa występuje staw siodełkowy / <u>obrotowy</u>.</li>
+        <li>C. Najszerszy zakres ruchów umożliwia staw <u>obrotowy</u> / kulisty.</li>
+      </ul>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 7</span><span class="zadanie-pts">(3 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">(1p) Wybierz (podkreśl) prawdziwe dokończenie zdania.</span></p>
+      <p class="zadanie-text">Lordoza to fizjologiczne wygięcie kręgosłupa w kierunku <span class="choice-inline">grzbietowym / brzusznym</span>.</p>
+      <p class="zadanie-text" style="margin-top:0.7rem"><span class="bold">Spośród wymienionych odcinków kręgosłupa (1p) wybierz i zaznacz dwa, w których występują lordozy, a następnie (1p) wskaż je za pomocą strzałek na schemacie obok (oznacz odpowiednią cyfrą).</span></p>
+      <ol class="num-list">
+        <li>szyjny</li><li>piersiowy</li><li>lędźwiowy</li><li>krzyżowy</li><li>guziczny</li>
+      </ol>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 8</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text">Właściwa dieta jest warunkiem niezbędnym do utrzymania układu ruchu w dobrej kondycji.</p>
+      <p class="zadanie-text"><span class="bold">Wymień dwie witaminy wpływające na stan układu ruchu, a następnie określ rolę każdej z nich.</span></p>
+      <div style="margin-top:0.7rem">
+        <div class="vitamin-row">
+          <span>1. Witamina</span>
+          <span class="answer-blank" style="max-width:70px"></span>
+          <span>Rola:</span>
+          <span class="answer-blank"></span>
+        </div>
+        <div class="vitamin-row" style="margin-top:0.45rem">
+          <span>2. Witamina</span>
+          <span class="answer-blank" style="max-width:70px"></span>
+          <span>Rola:</span>
+          <span class="answer-blank"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 9</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text">Autotransfuzja to zabieg przetaczania krwi, w którym biorca i dawcą jest chory sam dla siebie. Zabieg ten jest ponadto formą fizjologicznego dopingu, zabronionego prawem.</p>
+      <p class="zadanie-text"><span class="bold">Wyjaśnij, na czym polega działanie opisanego zabiegu jako środka dopingującego oraz podaj przykład zagrożenia dla zdrowia.</span></p>
+      <div class="answer-lines"><div class="answer-line"></div><div class="answer-line"></div><div class="answer-line"></div><div class="answer-line"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="gr2" class="section">
+  <div class="paper">
+    <div class="test-header">
+      <div class="test-title">Sprawdzian testowy z biologii (zakres podstawowy)</div>
+      <div class="test-subtitle">Grupa 2</div>
+      <div class="header-fields">
+        <div class="field-line"><span class="field-label">Nazwisko i imię ucznia:</span><span class="field-blank"></span></div>
+        <div class="field-line"><span class="field-label">Klasa:</span><span class="field-blank"></span></div>
+        <div class="field-line"><span class="field-label">Data:</span><span class="field-blank"></span></div>
+        <div class="max-pts">…… / 20 pkt max</div>
+      </div>
+    </div>
+    <div class="scope-note">Zakres treści: Bierna i czynna część układu ruchu – budowa i funkcje. Choroby i higiena układu ruchu.</div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 1</span><span class="zadanie-pts">(1 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Wyjaśnij, na czym polega magazynująca funkcja układu ruchu.</span></p>
+      <div class="answer-lines"><div class="answer-line"></div><div class="answer-line"></div></div>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 2</span><span class="zadanie-pts">(3 pkt)</span></div>
+      <p class="zadanie-text">Na ilustracji przedstawiono budowę stawu.</p>
+      <div class="sub-task">
+        <span class="sub-task-label">a) (1p)</span> Podaj nazwy elementów budujących staw, oznaczonych literami A–B.
+        <div class="blank-row">
+          <div class="blank-item"><span>A:</span><span class="answer-blank"></span></div>
+          <div class="blank-item"><span>B:</span><span class="answer-blank"></span></div>
+        </div>
+      </div>
+      <div class="sub-task">
+        <span class="sub-task-label">b) (1p)</span> Podkreśl nazwę stawu przedstawionego na ilustracji.
+        <p class="choice-inline" style="margin-top:0.25rem;margin-left:0.5rem">kulisty, <u>zawiasowy</u>, obrotowy, siodełkowy</p>
+      </div>
+      <div class="sub-task">
+        <span class="sub-task-label">c) (1p)</span> Podaj pełną nazwę tkanki budującej część nasadową kości (wskazaną strzałką).
+        <div class="answer-line" style="margin-top:0.35rem"></div>
+      </div>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 3</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Zaznacz dwa zdania, w których poprawnie opisano budowę kończyny górnej i kończyny dolnej.</span></p>
+      <ul class="options-list">
+        <li><span class="opt-label">A.</span> Rzepka występuje zarówno w budowie szkieletu kończyny górnej, jak i kończyny dolnej.</li>
+        <li><span class="opt-label">B.</span> W budowie obu obręczy: barkowej i miednicznej uczestniczy tyle samo kości.</li>
+        <li><span class="opt-label">C.</span> Kości kończyn pełnią funkcję krwiotwórczą u dorosłych ludzi.</li>
+        <li><span class="opt-label">D.</span> Kości stępu w kończynie dolnej są odpowiednikiem kości śródręcza w kończynie górnej.</li>
+        <li><span class="opt-label">E.</span> Kończyny górne oraz dolne są połączone ze szkieletem osiowym za pomocą obręczy.</li>
+      </ul>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 4</span><span class="zadanie-pts">(3 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">(1p) Wybierz (podkreśl) prawdziwe dokończenie zdania.</span></p>
+      <p class="zadanie-text">Kifoza to fizjologiczne wygięcie kręgosłupa w kierunku <span class="choice-inline">grzbietowym / brzusznym</span>.</p>
+      <p class="zadanie-text" style="margin-top:0.7rem"><span class="bold">Spośród wymienionych odcinków kręgosłupa (1p) wybierz i zaznacz dwa, w których występują kifozy, a następnie (1p) wskaż je za pomocą strzałek na schemacie obok (oznacz odpowiednią cyfrą).</span></p>
+      <ol class="num-list">
+        <li>szyjny</li><li>piersiowy</li><li>lędźwiowy</li><li>krzyżowy</li><li>guziczny</li>
+      </ol>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 5</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Wymień 3 kości, z których zrośnięcia powstała kość miednicza.</span></p>
+      <div class="answer-lines"><div class="answer-line"></div></div>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 6</span><span class="zadanie-pts">(1 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Wybierz poprawne dokończenie zdania.</span></p>
+      <p class="zadanie-text">Żuchwa należy do nietypowych kości czaszki, ponieważ jako jedyna jest:</p>
+      <ul class="options-list">
+        <li><span class="opt-label">A.</span> nieparzystą kością twarzoczaszki.</li>
+        <li><span class="opt-label">B.</span> połączona szwem z czaszką.</li>
+        <li><span class="opt-label">C.</span> niepołączona z innymi kościami czaszki.</li>
+        <li><span class="opt-label">D.</span> połączona stawem z mózgoczaszką.</li>
+        <li><span class="opt-label">E.</span> kością krwiotwórczą.</li>
+      </ul>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 7</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Podaj nazwę połączenia kości, jakie występuje pomiędzy żebrami i mostkiem:</span></p>
+      <div class="answer-line"></div>
+      <p class="zadanie-text" style="margin-top:0.7rem"><span class="bold">Określ jego fizjologiczną rolę:</span></p>
+      <div class="answer-lines"><div class="answer-line"></div><div class="answer-line"></div></div>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 8</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text">Na rysunku przedstawiono mięśnie szkieletowe biorące udział w ruchu kończyny górnej.</p>
+      <div class="sub-task">
+        <span class="sub-task-label">a) (1p)</span> Podaj, który z mięśni – A czy B – uczestniczy w ruchu przedramienia z rysunku i podaj jego nazwę.
+        <div class="blank-row">
+          <div class="blank-item"><span>Oznaczenie:</span><span class="answer-blank"></span></div>
+          <div class="blank-item"><span>Nazwa mięśnia:</span><span class="answer-blank"></span></div>
+        </div>
+      </div>
+      <div class="sub-task">
+        <span class="sub-task-label">b) (1p)</span> Napisz, na czym polega antagonizm w działaniu mięśni A i B w ruchu kończyny.
+        <div class="answer-lines"><div class="answer-line"></div><div class="answer-line"></div></div>
+      </div>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 9</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text"><span class="bold">Zaznacz dwa zdania poprawnie charakteryzujące osteoporozę i krzywicę.</span></p>
+      <ul class="options-list">
+        <li><span class="opt-label">A.</span> Zarówno krzywica jak i osteoporoza wiążą się ze zmniejszeniem gęstości mineralnej kości.</li>
+        <li><span class="opt-label">B.</span> Osteoporoza wynika z niedoboru wapnia w diecie, a krzywica z niedoboru witaminy D₃.</li>
+        <li><span class="opt-label">C.</span> Krzywica dotyka przede wszystkim osoby starsze, a osteoporoza dzieci.</li>
+        <li><span class="opt-label">D.</span> Przyczyną osteoporozy i krzywicy mogą być zaburzenia w produkcji hormonów płciowych.</li>
+        <li><span class="opt-label">E.</span> W profilaktyce osteoporozy i krzywicy ważną rolę odgrywa ekspozycja na światło słoneczne.</li>
+      </ul>
+    </div>
+
+    <div class="zadanie">
+      <div class="zadanie-header"><span>Zadanie 10</span><span class="zadanie-pts">(2 pkt)</span></div>
+      <p class="zadanie-text">Schemat przedstawia sposób działania hormonu – erytropoetyny (EPO) – w organizmie człowieka.</p>
+      <div class="epo-layout">
+        <p class="zadanie-text"><span class="bold">Na podstawie analizy schematu wyjaśnij, na czym polega działanie EPO jako środka dopingującego. Uzasadnij, że stosowanie tego typu wspomagania zagraża zdrowiu i życiu sportowca.</span></p>
+        <div class="schema-box">
+          <div class="schema-head"><span>NERKA<br>⬇ EPO</span><span>EPO ⬇<br>(podanie)</span></div>
+          <div class="schema-flow">
+            <div class="schema-node">KREW</div><div class="schema-arrow">↓</div>
+            <div class="schema-node">SZPIK</div><div class="schema-arrow">↓</div>
+            <div class="schema-node">ERYTROCYTY</div><div class="schema-arrow">↓</div>
+            <div class="schema-label">INTENSYWNIEJSZA<br>WYMIANA GAZOWA</div>
+          </div>
+        </div>
+      </div>
+      <div class="answer-lines"><div class="answer-line"></div><div class="answer-line"></div><div class="answer-line"></div><div class="answer-line"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="key1" class="section key-section">
+  <div class="paper">
+    <div class="test-header">
+      <div class="test-title">Klucz odpowiedzi – Grupa 1</div>
+      <div class="test-subtitle" style="color:var(--accent2)">Sprawdzian z biologii · Układ ruchu</div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 1 <span class="key-pts">1 pkt</span></div>
+      <div class="key-answer">Krwiotwórcza funkcja układu ruchu polega na produkcji komórek krwi (erytrocytów, leukocytów, trombocytów) w szpiku kostnym czerwonym, znajdującym się w kościach gąbczastych (mostek, żebra, kości miednicy) i nasadach kości długich.</div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 2 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>Prawidłowe odpowiedzi: A i C</strong><br>
+        A – Okostna uczestniczy w przebudowie kości po urazach mechanicznych. ✓<br>
+        C – Tkanka kostna gąbczasta buduje głównie nasady kości długich. ✓
+        <div class="accepted">B – fałsz (gąbczasta jest mniej twarda); D – fałsz (blaszki to element tkanki zbitej); E – fałsz (u dorosłych dominuje szpik żółty)</div>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 3 <span class="key-pts">3 pkt</span></div>
+      <div class="key-answer">
+        <strong>X (włókniste – szwy czaszki): B, E</strong><br>
+        <strong>Y (chrzęstne – między trzonami kręgów): A, F</strong><br>
+        <strong>Z (kostne – kość krzyżowa): C, D</strong>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 4 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>a)</strong> X – obojczyk, Y – kość ramienna, Z – kość promieniowa (lub łokciowa)<br>
+        <strong>b)</strong> Nazwa stawu: staw barkowy (ramienny) · Rodzaj: kulisty
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 5 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">niezbędne są: <strong>impulsy nerwowe / jony wapnia (Ca²⁺)</strong> oraz <strong>energia (ATP)</strong>.</div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 6 <span class="key-pts">3 pkt</span></div>
+      <div class="key-answer">
+        A. staw <strong>zawiasowy</strong> / <s>siodełkowy</s><br>
+        B. staw <s>siodełkowy</s> / <strong>obrotowy</strong><br>
+        C. staw <s>obrotowy</s> / <strong>kulisty</strong>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 7 <span class="key-pts">3 pkt</span></div>
+      <div class="key-answer">
+        Lordoza – wygięcie ku <strong>brzusznemu</strong>.<br>
+        Odcinki z lordozami: <strong>1 – szyjny</strong> i <strong>3 – lędźwiowy</strong>.<br>
+        Na schemacie: strzałki ku przodowi przy odcinkach 1 i 3.
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 8 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        1. Witamina <strong>D₃</strong> – umożliwia wchłanianie wapnia; warunkuje mineralizację kości.<br>
+        2. Witamina <strong>C</strong> – uczestniczy w syntezie kolagenu; niedobór osłabia kości i stawy.
+        <div class="accepted">Akceptowane też: wit. K (aktywuje białka kostne), wit. A (wpływa na przebudowę kości)</div>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 9 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>Mechanizm (1p):</strong> Wcześniejsze pobranie własnej krwi i przetoczenie jej przed zawodami zwiększa liczbę erytrocytów, a tym samym ilość transportowanego tlenu do mięśni.<br>
+        <strong>Zagrożenie (1p):</strong> Zagęszczenie krwi → zakrzepy, zator płucny, przeciążenie serca; ryzyko zakażenia podczas zabiegu.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="key2" class="section key-section">
+  <div class="paper">
+    <div class="test-header">
+      <div class="test-title">Klucz odpowiedzi – Grupa 2</div>
+      <div class="test-subtitle" style="color:var(--accent2)">Sprawdzian z biologii · Układ ruchu</div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 1 <span class="key-pts">1 pkt</span></div>
+      <div class="key-answer">Magazynująca funkcja polega na gromadzeniu w kościach soli mineralnych – głównie wapnia i fosforu – stanowiących rezerwę dla organizmu.</div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 2 <span class="key-pts">3 pkt</span></div>
+      <div class="key-answer">
+        <strong>a)</strong> A – chrząstka stawowa (powierzchnia stawowa); B – torebka stawowa (maź stawowa / jama stawowa)<br>
+        <strong>b)</strong> Staw <strong>zawiasowy</strong><br>
+        <strong>c)</strong> Tkanka kostna <strong>gąbczasta</strong>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 3 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>Prawidłowe odpowiedzi: D i E</strong><br>
+        D – Kości stępu są odpowiednikiem kości śródręcza. ✓<br>
+        E – Kończyny połączone ze szkieletem osiowym za pomocą obręczy. ✓
+        <div class="accepted">A – fałsz (rzepka tylko w kończynie dolnej); B – fałsz (obręcze mają różną liczbę kości); C – fałsz (u dorosłych nie)</div>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 4 <span class="key-pts">3 pkt</span></div>
+      <div class="key-answer">
+        Kifoza – wygięcie ku <strong>grzbietowemu</strong>.<br>
+        Odcinki z kifozami: <strong>2 – piersiowy</strong> i <strong>4 – krzyżowy</strong>.<br>
+        Na schemacie: strzałki ku tyłowi przy odcinkach 2 i 4.
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 5 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>kość biodrowa, kość łonowa, kość kulszowa</strong>
+        <div class="accepted">Za 3 poprawne – 2 pkt; za 2 poprawne – 1 pkt</div>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 6 <span class="key-pts">1 pkt</span></div>
+      <div class="key-answer">
+        Prawidłowa odpowiedź: <strong>D</strong> – połączona stawem z mózgoczaszką (staw skroniowo-żuchwowy).
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 7 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>Nazwa (1p):</strong> Połączenie chrzęstne (chrząstkozrost / synchordroza)<br>
+        <strong>Rola (1p):</strong> Umożliwia sprężyste unoszenie i opuszczanie klatki piersiowej podczas oddychania; amortyzuje wstrząsy.
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 8 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>a)</strong> Mięsień <strong>A</strong> – mięsień dwugłowy ramienia (biceps brachii)<br>
+        <strong>b)</strong> Antagonizm: gdy mięsień A (biceps) kurczy się i zgina przedramię, mięsień B (triceps) jednocześnie się rozkurcza – i odwrotnie. Umożliwia to kontrolowane ruchy w obu kierunkach.
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 9 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>Prawidłowe odpowiedzi: A i E</strong><br>
+        A – Obie choroby wiążą się ze zmniejszeniem gęstości mineralnej kości. ✓<br>
+        E – Ekspozycja na słońce ma znaczenie profilaktyczne w obu przypadkach. ✓
+        <div class="accepted">B – fałsz (osteoporoza wynika z niedoboru wapnia lub D₃, nie jest to cecha rozróżniająca); C – fałsz (odwrotnie)</div>
+      </div>
+    </div>
+    <div class="key-item">
+      <div class="key-zadanie">Zadanie 10 <span class="key-pts">2 pkt</span></div>
+      <div class="key-answer">
+        <strong>Działanie EPO (1p):</strong> EPO stymuluje szpik do produkcji większej liczby erytrocytów → krew przenosi więcej tlenu → wzrost wydolności mięśni.<br>
+        <strong>Zagrożenie (1p):</strong> Zagęszczenie krwi zwiększa ryzyko zakrzepicy, udaru, zawału serca i zatoru – szczególnie groźne podczas wysiłku i odwodnienia.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="notes" class="section notes-section">
+  <div class="paper">
+    <div class="notes-title">📚 Notatki do sprawdzianu</div>
+    <div class="notes-sub">Bierna i czynna część układu ruchu · Budowa i funkcje · Choroby i higiena</div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">🦴</span>Budowa kości (na przykładzie kości długiej)</div>
+      <div class="note-text">
+        Kość długa (np. udowa) zbudowana jest z <strong>trzonu</strong> oraz dwóch <strong>nasad</strong>.
+      </div>
+      <table class="note-table" style="margin-top:0.4rem">
+        <tr><th>Element budowy</th><th>Charakterystyka i funkcje</th></tr>
+        <tr><td><strong>Tkanka kostna zbita</strong></td><td>Buduje trzon kości. Jest twarda, zwarta, złożona z blaszek kostnych ściśle przylegających do siebie.</td></tr>
+        <tr><td><strong>Tkanka kostna gąbczasta</strong></td><td>Buduje wnętrze nasad. Ma ażurową budowę z beleczek, amortyzuje obciążenia mechaniczne, jest lżejsza.</td></tr>
+        <tr><td><strong>Szpik kostny</strong></td><td>Galaretowata substancja wypełniająca kości. U dzieci głównie <strong>czerwony</strong> (krwiotwórczy). U dorosłych w trzonach zastępowany przez szpik <strong>żółty</strong> (tkanka tłuszczowa).</td></tr>
+        <tr><td><strong>Okostna</strong></td><td>Błona okrywająca kość (poza powierzchniami stawowymi). Uczestniczy w przebudowie i odżywianiu, bogato ukrwiona i unerwiona (rola w gojeniu złamań).</td></tr>
+      </table>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">🗺️</span>Podział szkieletu i szkielet osiowy</div>
+      <div class="note-text">Szkielet dzieli się na <strong>szkielet osiowy</strong> oraz <strong>szkielet kończyn</strong> (wraz z obręczami).</div>
+      <table class="note-table" style="margin-top:0.4rem">
+        <tr><th>Część osiowa</th><th>Budowa / Cechy</th></tr>
+        <tr><td><strong>Czaszka</strong></td><td>Dzieli się na <strong>mózgoczaszkę</strong> (ochrona mózgu m.in. k. czołowa, potyliczna) i <strong>twarzoczaszkę</strong> (ochrona narządów zmysłów; m.in. szczęka, żuchwa – jedyna ruchoma kość). Występują tu <strong>zatoki</strong> (ogrzewanie powietrza).</td></tr>
+        <tr><td><strong>Klatka piersiowa</strong></td><td>Złożona z kręgów piersiowych, mostka i 12 par żeber: <strong>prawdziwe</strong> (1-7 para, łączą się z mostkiem), <strong>rzekome</strong> (8-10, łączą się przez chrząstkę) i <strong>wolne</strong> (11-12, nie łączą się). Chroni serce i płuca.</td></tr>
+        <tr><td><strong>Kręgosłup</strong></td><td>33-34 kręgi. Odcinki: szyjny (7), piersiowy (12), lędźwiowy (5), krzyżowy (5 zrośniętych), guziczny (4-5).</td></tr>
+      </table>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">🔗</span>Rodzaje połączeń kości i budowa stawu</div>
+      <table class="note-table">
+        <tr><th>Typ połączeń</th><th>Przykłady z organizmu</th></tr>
+        <tr><td><strong>Więzozrosty (ścisłe)</strong></td><td>Szwy w kościach czaszki (tkanka włóknista).</td></tr>
+        <tr><td><strong>Chrząstkozrosty (ścisłe)</strong></td><td>Krążki międzykręgowe, połączenie żeber z mostkiem.</td></tr>
+        <tr><td><strong>Kościozrosty (ścisłe)</strong></td><td>Zrośnięte kręgi kości krzyżowej, kość miednicza (biodrowa, łonowa, kulszowa).</td></tr>
+        <tr><td><strong>Stawy (ruchome)</strong></td><td>Kulisty (bark, biodro), Zawiasowy (kolano, łokieć, paliczki), Obrotowy (kręgi C1-C2), Siodełkowy (kciuk).</td></tr>
+      </table>
+      <div class="tip-box" style="margin-top:0.5rem">
+        <strong>Budowa stawu:</strong><br>
+        • <strong>Powierzchnie stawowe:</strong> pokryte chrząstką zmniejszającą tarcie.<br>
+        • <strong>Jama stawowa:</strong> szczelina wypełniona mazią stawową.<br>
+        • <strong>Torebka stawowa:</strong> otacza staw, stabilizuje, produkuje maź.<br>
+        • <strong>Więzadła:</strong> wzmacniają i utrzymują kości w położeniu.
+      </div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">💪</span>Mięśnie – budowa i praca</div>
+      <div class="note-text">
+        Mięsień szkieletowy zbudowany jest z tkanki mięśniowej tworzącej <strong>brzusiec</strong> (część kurczliwa) i <strong>ścięgien</strong> (przyczepy do kości). Niektóre mięśnie dzielą się na <strong>głowy</strong> (np. dwugłowy ramienia - biceps, trójgłowy - triceps). Do skurczu potrzebne są impulsy nerwowe i jony $Ca^{2+}$.
+      </div>
+      <div class="tip-box" style="margin-top:0.5rem">
+        <strong>Współpraca mięśni:</strong><br>
+        • <strong>Antagonistyczna:</strong> działanie przeciwstawne (zginacz kurczy się, prostownik rozkurcza). Umożliwia precyzyjny powrót z ruchu.<br>
+        • <strong>Synergistyczna:</strong> współdziałanie mięśni pracujących w tym samym kierunku.
+      </div>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">⚖️</span>Fizjologia i Wady Postawy</div>
+      <table class="note-table">
+        <tr><th>Zjawisko / Wylęgi</th><th>Definicja i charakterystyka</th></tr>
+        <tr><td><strong>Kifoza</strong></td><td>Fizjologiczne wygięcie kręgosłupa ku tyłowi (grzbietowemu). Odcinki: piersiowy i krzyżowy.</td></tr>
+        <tr><td><strong>Lordoza</strong></td><td>Fizjologiczne wygięcie kręgosłupa ku przodowi (brzusznemu). Odcinki: szyjny i lędźwiowy.</td></tr>
+        <tr><td><strong>Skolioza</strong></td><td>Patologiczne boczne skrzywienie kręgosłupa. Nieleczona zniekształca klatkę piersiową.</td></tr>
+        <tr><td><strong>Nadmierna kifoza/lordoza</strong></td><td>Pogłębienie naturalnych krzywizn postawy ("garb" w piersiowym lub bolesny ucisk w lędźwiowym).</td></tr>
+        <tr><td><strong>Płaskostopie</strong></td><td>Brak prawidłowego wysklepienia stopy (cała stopa przylega do podłoża). Związane z osłabieniem więzadeł stopy.</td></tr>
+      </table>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">⚕️</span>Urazy i Choroby układu ruchu</div>
+      <table class="note-table">
+        <tr><th>Uraz / Choroba</th><th>Opis / Przyczyna</th></tr>
+        <tr><td><strong>Złamanie kości</strong></td><td>Całkowite przerwanie ciągłości kości.</td></tr>
+        <tr><td><strong>Skręcenie stawu</strong></td><td>Naciągnięcie lub lekkie uszkodzenie torebki stawowej / więzadeł bez trwałego przemieszczenia.</td></tr>
+        <tr><td><strong>Zwichnięcie stawu</strong></td><td>Zerwanie torebki i więzadeł wraz z trwałym przemieszczeniem powierzchni stawowych względem siebie.</td></tr>
+        <tr><td><strong>Krzywica</strong></td><td>(U dzieci) Zaburzenia gospodarki wapniowo-fosforowej przez niedobór witaminy D₃ (brak nasłonecznienia). Miękkie kości, deformacje.</td></tr>
+        <tr><td><strong>Osteoporoza</strong></td><td>(U dorosłych) Zmniejszenie gęstości mineralnej kości (niedobór wapnia i D₃, spadek hormonów np. po menopauzie). Zwiększona podatność na złamania.</td></tr>
+      </table>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">🥦</span>Dieta i Higiena Układu Ruchu</div>
+      <div class="note-text">Do sprawnego funkcjonowania układ potrzebuje zbilansowanej diety, szczególnie:
+        <strong>Białka</strong> (budulec), <strong>Wody</strong>, <strong>Minerałów</strong> (Wapń, Fosfor, Magnez - twardość kości) i <strong>Witamin</strong>:
+      </div>
+      <ul style="font-size: clamp(0.8rem, 2.5vw, 0.88rem); line-height: 1.6; margin: 0.4rem 0 0.8rem 1.4rem;">
+        <li><strong>Witamina D₃:</strong> decyduje o przyswajaniu wapnia, warunkuje mineralizację. Zależy od nasłonecznienia i nabiału.</li>
+        <li><strong>Witamina C:</strong> niezbędna do syntezy kolagenu budującego kości i chrząstki (elastyczność).</li>
+      </ul>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">💉</span>Wpływ dopingu na organizm</div>
+      <div class="note-text">Stosowanie sztucznych metod podnoszenia wydolności jest zakazane i niebezpieczne dla zdrowia.</div>
+      <table class="note-table" style="margin-top:0.4rem">
+        <tr><th>Rodzaj dopingu</th><th>Działanie i zagrożenia (skutki uboczne)</th></tr>
+        <tr><td><strong>Środki anaboliczne (Testosteron)</strong></td><td>Przyspieszają wzrost masy. Skutki: łysienie, uszkodzenie wątroby, wahania nastroju, zawał serca.</td></tr>
+        <tr><td><strong>Erytropoetyna (EPO) / Transfuzja krwi</strong></td><td>Pobudza szpik do produkcji erytrocytów (lepsze dotlenienie). Skutki: zagęszczenie krwi → zakrzepy, zawał serca, udar mózgu.</td></tr>
+        <tr><td><strong>Środki pobudzające/przeciwbólowe</strong></td><td>Eliminują odczuwanie bólu i zmęczenia. Skutki: prowadzą do wyczerpania, ciężkie uzależnienia.</td></tr>
+      </table>
+    </div>
+
+    <div class="note-block">
+      <div class="note-block-title"><span class="note-icon">🗝️</span>Kluczowe pojęcia – szybka powtórka</div>
+      <div class="tag-grid">
+        <span class="tag">Okostna – przebudowa kości</span>
+        <span class="tag">Szpik czerwony – krwiotwórstwo</span>
+        <span class="tag">Tkanka gąbczasta – nasady kości długich</span>
+        <span class="tag">Tkanka zbita – trzony kości długich</span>
+        <span class="tag">Torebka stawowa – stabilizacja stawu</span>
+        <span class="tag">Chrząstka stawowa – mniejsze tarcie</span>
+        <span class="tag green">Kość miednicza = biodrowa + łonowa + kulszowa</span>
+        <span class="tag green">Żuchwa – ruchoma kość czaszki</span>
+        <span class="tag green">Biceps – zginacz; triceps – prostownik</span>
+        <span class="tag green">Lordoza = brzuszne (szyjna + lędźwiowa)</span>
+        <span class="tag green">Kifoza = grzbietowe (piersiowa + krzyżowa)</span>
+        <span class="tag green">Wit. D₃ = wchłanianie Wapnia (Ca)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><script>
+  const ids = ['gr1','gr2','key1','key2','notes'];
+  function show(id, i) {
+    ids.forEach(s => document.getElementById(s).classList.remove('visible'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('visible');
+    document.querySelectorAll('.nav-tab')[i].classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+</script>
 </body>
-
 </html>
-
